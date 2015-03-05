@@ -38,6 +38,13 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
 )
 
+WEB_APPS = ('web',
+)
+
+_INSTALLED_APPS = list(INSTALLED_APPS)
+_INSTALLED_APPS.extend(WEB_APPS)
+INSTALLED_APPS = tuple(_INSTALLED_APPS)
+
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -80,3 +87,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.6/howto/static-files/
 
 STATIC_URL = '/static/'
+
+path_join = lambda el: os.path.join(BASE_DIR, el, 'template').replace('\\', '/')
+STATICFILES_DIRS = tuple([path_join(el) for el in WEB_APPS])
+TEMPLATE_DIRS = tuple([path_join(el) for el in WEB_APPS])
+
+
